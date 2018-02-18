@@ -1,0 +1,89 @@
+# github.com/go-task/task
+
+default:
+  deps:
+    - process_clock
+    - process_id
+    - process_memories
+    - process_memoriesfile
+    - process_memory
+    - process_mock
+    - process_storage
+    - process_storagedir
+    - process_storagetests
+    - process_unit
+
+process_clock:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "clock"} }
+    - { task: lint_module, vars: {MODULE_NAME: "clock"} }
+    - { task: test_module, vars: {MODULE_NAME: "clock"} }
+
+process_id:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "id"} }
+    - { task: lint_module, vars: {MODULE_NAME: "id"} }
+    - { task: test_module, vars: {MODULE_NAME: "id"} }
+
+process_memories:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "memories"} }
+    - { task: lint_module, vars: {MODULE_NAME: "memories"} }
+    - { task: test_module, vars: {MODULE_NAME: "memories"} }
+
+process_memoriesfile:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "memoriesfile"} }
+    - { task: lint_module, vars: {MODULE_NAME: "memoriesfile"} }
+    - { task: test_module, vars: {MODULE_NAME: "memoriesfile"} }
+
+process_memory:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "memory"} }
+    - { task: lint_module, vars: {MODULE_NAME: "memory"} }
+    - { task: test_module, vars: {MODULE_NAME: "memory"} }
+
+process_mock:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "mock"} }
+    - { task: lint_module, vars: {MODULE_NAME: "mock"} }
+    - { task: test_module, vars: {MODULE_NAME: "mock"} }
+
+process_storage:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "storage"} }
+    - { task: lint_module, vars: {MODULE_NAME: "storage"} }
+    - { task: test_module, vars: {MODULE_NAME: "storage"} }
+
+process_storagedir:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "storagedir"} }
+    - { task: lint_module, vars: {MODULE_NAME: "storagedir"} }
+    - { task: test_module, vars: {MODULE_NAME: "storagedir"} }
+
+process_storagetests:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "storagetests"} }
+    - { task: lint_module, vars: {MODULE_NAME: "storagetests"} }
+    - { task: test_module, vars: {MODULE_NAME: "storagetests"} }
+
+process_unit:
+  deps:
+    - { task: build_module, vars: {MODULE_NAME: "unit"} }
+    - { task: lint_module, vars: {MODULE_NAME: "unit"} }
+    - { task: test_module, vars: {MODULE_NAME: "unit"} }
+
+build_module:
+  cmds:
+    - cd "{{.MODULES_ROOT_DIR}}{{.MODULE_NAME}}" && zb build
+  silent: true
+
+lint_module:
+  cmds:
+    - cd "{{.MODULES_ROOT_DIR}}{{.MODULE_NAME}}" && zb lint -f
+  silent: true
+
+test_module:
+  cmds:
+    - cd "{{.MODULES_ROOT_DIR}}{{.MODULE_NAME}}" && go test -v ./...
+  silent: true
